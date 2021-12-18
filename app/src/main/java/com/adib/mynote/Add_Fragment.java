@@ -1,27 +1,28 @@
 package com.adib.mynote;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
-
+import com.adib.mynote.room.Note;
+import com.adib.mynote.room.NoteDatabase;
 import com.adib.mynote.viewmodel.AddViewModel;
-
-import org.jetbrains.annotations.NotNull;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class Add_Fragment extends Fragment {
     private AddViewModel model;
+    private FloatingActionButton addButton;
     private EditText textNote;
     private EditText titleNote;
+    private NoteDatabase database;
 
     public Add_Fragment() {
         // Required empty public constructor
@@ -42,10 +43,35 @@ public class Add_Fragment extends Fragment {
     public void onViewCreated(View view,Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //Init Variable
+        database = NoteDatabase.getInstance(getActivity());
+        addButton = getView().findViewById(R.id.Add_Button);
         model = new ViewModelProvider(getActivity()).get(AddViewModel.class);
         textNote = getView().findViewById(R.id.Text_Note);
         titleNote = getView().findViewById(R.id.Title_Note);
         View backButton;
+
+        //Set Title and Text From ViewModel
+        titleNote.setText(model.getNoteTitle());
+        textNote.setText(model.getNoteText());
+
+        //Add Button Logic
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("CheckResult")
+            @Override
+            public void onClick(View v) {
+                Note note = new Note(titleNote.getText().toString(),textNote.getText().toString());
+                database.noteDao().insert(note).subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(() -> {
+                                    Toast toast = Toast.makeText(getActivity(), "Add Note", Toast.LENGTH_SHORT);
+                                    toast.show();
+                                },throwable -> {
+                                    Toast toast = Toast.makeText(getActivity(), "Error " + throwable, Toast.LENGTH_SHORT);
+                                    toast.show();
+                        });
+            }
+        });
+
 
         //Back Button Logic
         backButton = getView().findViewById(R.id.Back_Button_Add);
@@ -55,10 +81,6 @@ public class Add_Fragment extends Fragment {
                 Navigation.findNavController(view).popBackStack();
             }
         });
-
-        //Set Title and Text From ViewModel
-        titleNote.setText(model.getNoteTitle());
-        textNote.setText(model.getNoteText());
     }
 
     @Override

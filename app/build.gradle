@@ -33,8 +33,10 @@ dependencies {
     def nav_version = "2.3.5"
     def room_version = "2.4.0"
 
-    // optional - RxJava2 support for Room
-    implementation "androidx.room:room-rxjava2:$room_version"
+    // optional - RxJava3 support for Room
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    implementation 'androidx.room:room-rxjava3:2.3.0-alpha02'
+
 
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
