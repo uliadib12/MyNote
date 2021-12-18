@@ -30,15 +30,37 @@
             android:text="Add"/>
     </androidx.appcompat.widget.Toolbar>
 
-    <TextView
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:gravity="center"
-        android:text="Add Fragment"
-        android:textSize="40dp"
+        android:paddingTop="10dp"
+        android:paddingHorizontal="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Top_Bar"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Top_Bar">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floating_action_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="10dp"
+            app:tint="@color/white"
+            android:backgroundTint="@color/purple_500"
+            android:contentDescription="Add"
+            app:srcCompat="@drawable/ic_baseline_add_24"
+            tools:ignore="VectorDrawableCompat" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="My Note"
+            android:textSize="30dp"
+            android:background="#00000000"/>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
