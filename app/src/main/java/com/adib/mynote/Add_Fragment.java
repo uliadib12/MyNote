@@ -21,6 +21,7 @@ import org.jetbrains.annotations.NotNull;
 public class Add_Fragment extends Fragment {
     private AddViewModel model;
     private EditText textNote;
+    private EditText titleNote;
 
     public Add_Fragment() {
         // Required empty public constructor
@@ -43,6 +44,7 @@ public class Add_Fragment extends Fragment {
         //Init Variable
         model = new ViewModelProvider(getActivity()).get(AddViewModel.class);
         textNote = getView().findViewById(R.id.Text_Note);
+        titleNote = getView().findViewById(R.id.Title_Note);
         View backButton;
 
         //Back Button Logic
@@ -54,7 +56,8 @@ public class Add_Fragment extends Fragment {
             }
         });
 
-        //Set Text From ViewModel
+        //Set Title and Text From ViewModel
+        titleNote.setText(model.getNoteTitle());
         textNote.setText(model.getNoteText());
     }
 
@@ -62,7 +65,8 @@ public class Add_Fragment extends Fragment {
     public void onStop() {
         super.onStop();
 
-        //Set Text To Model When Fragment Lifecycle onStop
+        //Set Title and Text To Model When Fragment Lifecycle onStop
         model.setNoteText(textNote.getText().toString());
+        model.setNoteTitle(titleNote.getText().toString());
     }
 }
