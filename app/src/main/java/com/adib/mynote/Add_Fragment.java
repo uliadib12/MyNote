@@ -59,16 +59,23 @@ public class Add_Fragment extends Fragment {
             @SuppressLint("CheckResult")
             @Override
             public void onClick(View v) {
-                Note note = new Note(titleNote.getText().toString(),textNote.getText().toString());
-                database.noteDao().insert(note).subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(() -> {
-                                    Toast toast = Toast.makeText(getActivity(), "Add Note", Toast.LENGTH_SHORT);
-                                    toast.show();
-                                },throwable -> {
-                                    Toast toast = Toast.makeText(getActivity(), "Error " + throwable, Toast.LENGTH_SHORT);
-                                    toast.show();
-                        });
+                if(!(titleNote.getText().toString().isEmpty()) && !(textNote.getText().toString().isEmpty())){
+                    Note note = new Note(titleNote.getText().toString(),textNote.getText().toString());
+                    database.noteDao().insert(note).subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(() -> {
+                                Toast toast = Toast.makeText(getActivity(), "Add Note", Toast.LENGTH_SHORT);
+                                toast.show();
+                            },throwable -> {
+                                Toast toast = Toast.makeText(getActivity(), "Error " + throwable, Toast.LENGTH_SHORT);
+                                toast.show();
+                            });
+                }
+                else {
+                    Toast toast = Toast.makeText(getActivity(), "Please Input Some Note", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+
             }
         });
 

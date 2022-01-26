@@ -9,15 +9,11 @@ public class AddViewModel extends ViewModel {
     public String getNoteTitle() {
         return noteTitle;
     }
+    public String getNoteText() { return noteText; }
 
     public void setNoteTitle(String noteTitle) {
         this.noteTitle = noteTitle;
     }
-
-    public String getNoteText() {
-        return noteText;
-    }
-
     public void setNoteText(String noteText) {
         this.noteText = noteText;
     }
