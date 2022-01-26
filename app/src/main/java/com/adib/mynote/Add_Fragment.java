@@ -23,6 +23,7 @@ public class Add_Fragment extends Fragment {
     private EditText textNote;
     private EditText titleNote;
     private NoteDatabase database;
+    private boolean isDataSet;
 
     public Add_Fragment() {
         // Required empty public constructor
@@ -48,6 +49,7 @@ public class Add_Fragment extends Fragment {
         model = new ViewModelProvider(getActivity()).get(AddViewModel.class);
         textNote = getView().findViewById(R.id.Text_Note);
         titleNote = getView().findViewById(R.id.Title_Note);
+        isDataSet = false;
         View backButton;
 
         //Set Title and Text From ViewModel
@@ -66,6 +68,8 @@ public class Add_Fragment extends Fragment {
                             .subscribe(() -> {
                                 Toast toast = Toast.makeText(getActivity(), "Add Note", Toast.LENGTH_SHORT);
                                 toast.show();
+                                isDataSet = true;
+                                Navigation.findNavController(view).popBackStack();
                             },throwable -> {
                                 Toast toast = Toast.makeText(getActivity(), "Error " + throwable, Toast.LENGTH_SHORT);
                                 toast.show();
@@ -95,7 +99,13 @@ public class Add_Fragment extends Fragment {
         super.onStop();
 
         //Set Title and Text To Model When Fragment Lifecycle onStop
-        model.setNoteText(textNote.getText().toString());
-        model.setNoteTitle(titleNote.getText().toString());
+        if(isDataSet){
+            model.setNoteText("");
+            model.setNoteTitle("");
+        }
+        else {
+            model.setNoteText(textNote.getText().toString());
+            model.setNoteTitle(titleNote.getText().toString());
+        }
     }
 }

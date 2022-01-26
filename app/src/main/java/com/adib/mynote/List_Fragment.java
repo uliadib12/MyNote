@@ -12,16 +12,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.adib.mynote.recyclerview.NoteAdapter;
 import com.adib.mynote.room.Note;
+import com.adib.mynote.room.NoteDatabase;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 public class List_Fragment extends Fragment {
     private ArrayList<Note> noteArrayList;
+    private RecyclerView recyclerView;
+    private NoteAdapter noteAdapter;
+    private NoteDatabase database;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,8 +48,7 @@ public class List_Fragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         //Init Variable
         View backButton;
-        RecyclerView recyclerView;
-        NoteAdapter noteAdapter;
+        database = NoteDatabase.getInstance(getActivity());
 
         //Back Button Logic
         backButton = getView().findViewById(R.id.Back_Button_List);
@@ -54,15 +61,22 @@ public class List_Fragment extends Fragment {
 
         //RecycleView Logic
         addData();
-        recyclerView = (RecyclerView) getView().findViewById(R.id.RecycleView_NoteList);
-        noteAdapter = new NoteAdapter(noteArrayList);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(noteAdapter);
     }
 
     private void addData(){
         noteArrayList = new ArrayList<>();
-        noteArrayList.add(new Note("Recycle View","Percobaan Recycle"));
+        database.noteDao().getAll().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe( data -> {
+                    noteArrayList.addAll(data);
+                    recyclerView = (RecyclerView) getView().findViewById(R.id.RecycleView_NoteList);
+                    noteAdapter = new NoteAdapter(noteArrayList);
+                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+                    recyclerView.setLayoutManager(layoutManager);
+                    recyclerView.setAdapter(noteAdapter);
+                },throwable -> {
+                    Toast toast = Toast.makeText(getActivity(), "Error " + throwable, Toast.LENGTH_SHORT);
+                    toast.show();
+                });
     }
 }
