@@ -76,13 +76,20 @@ public class List_Fragment extends Fragment {
                     NoteAdapter.ListenerNoteViewHolder listenerNoteViewHolder = new NoteAdapter.ListenerNoteViewHolder() {
                         @Override
                         public void onClick(View v, int position) {
-                            Toast toast = Toast.makeText(getActivity(), "Position: " + position, Toast.LENGTH_SHORT);
+                            Toast toast = Toast.makeText(getActivity(), "Title: " + data.get(position).getTitle(), Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                    };
+                    NoteAdapter.ListenerlongNoteViewHolder listenerlongNoteViewHolder = new NoteAdapter.ListenerlongNoteViewHolder() {
+                        @Override
+                        public void onClick(View v, int position) {
+                            Toast toast = Toast.makeText(getActivity(), "ID: " + position, Toast.LENGTH_SHORT);
                             toast.show();
                         }
                     };
                     noteArrayList.addAll(data);
                     recyclerView = (RecyclerView) getView().findViewById(R.id.RecycleView_NoteList);
-                    noteAdapter = new NoteAdapter(noteArrayList, listenerNoteViewHolder);
+                    noteAdapter = new NoteAdapter(noteArrayList, listenerNoteViewHolder, listenerlongNoteViewHolder);
                     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
                     recyclerView.setLayoutManager(layoutManager);
                     recyclerView.setAdapter(noteAdapter);
