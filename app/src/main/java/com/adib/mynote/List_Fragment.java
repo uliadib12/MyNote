@@ -68,9 +68,16 @@ public class List_Fragment extends Fragment {
         database.noteDao().getAll().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe( data -> {
+                    NoteAdapter.ListenerNoteViewHolder listenerNoteViewHolder = new NoteAdapter.ListenerNoteViewHolder() {
+                        @Override
+                        public void onClick(View v, int position) {
+                            Toast toast = Toast.makeText(getActivity(), "Position: " + position, Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                    };
                     noteArrayList.addAll(data);
                     recyclerView = (RecyclerView) getView().findViewById(R.id.RecycleView_NoteList);
-                    noteAdapter = new NoteAdapter(noteArrayList);
+                    noteAdapter = new NoteAdapter(noteArrayList, listenerNoteViewHolder);
                     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
                     recyclerView.setLayoutManager(layoutManager);
                     recyclerView.setAdapter(noteAdapter);
