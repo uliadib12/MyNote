@@ -77,6 +77,7 @@ public class List_Fragment extends Fragment {
                         @Override
                         public void onClick(View v, int position) {
                             Bundle bundle = new Bundle();
+                            bundle.putInt("Id", data.get(position).id);
                             bundle.putString("Title", data.get(position).title);
                             bundle.putString("Text", data.get(position).text);
                             Navigation.findNavController(view).navigate(R.id.action_list_Fragment_to_ViewCardNote_Fragment,bundle);

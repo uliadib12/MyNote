@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ public class ViewCardNote_Fragment extends Fragment {
     private ViewCardNoteModel model;
     private EditText textNote;
     private EditText titleNote;
+    private View backButton;
 
     public ViewCardNote_Fragment() {
         // Required empty public constructor
@@ -67,5 +69,14 @@ public class ViewCardNote_Fragment extends Fragment {
         //Set Title and Text From Bundle Args
         model.getTitle().setValue(getArguments().getString("Title"));
         model.getText().setValue(getArguments().getString("Text"));
+
+        //Back Button Logic
+        backButton = getView().findViewById(R.id.Back_Button_Add);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(view).popBackStack();
+            }
+        });
     }
 }

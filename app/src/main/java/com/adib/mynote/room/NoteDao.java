@@ -15,6 +15,9 @@ public interface NoteDao {
     @Query("SELECT * FROM Note")
     Single<List<Note>> getAll();
 
+    @Query("UPDATE note SET title = :title, text = :text WHERE id = :id")
+    Completable update(int id, String title, String text);
+
     @Insert
     Completable insert(Note note);
 
