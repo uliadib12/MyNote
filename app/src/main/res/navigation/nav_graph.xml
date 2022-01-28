@@ -27,10 +27,19 @@
         android:id="@+id/list_Fragment"
         android:name="com.adib.mynote.List_Fragment"
         android:label="fragment_list"
-        tools:layout="@layout/fragment_list" />
+        tools:layout="@layout/fragment_list" >
+        <action
+            android:id="@+id/action_list_Fragment_to_ViewCardNote_Fragment"
+            app:destination="@id/ViewCardNote_Fragment" />
+    </fragment>
     <fragment
         android:id="@+id/add_Fragment"
         android:name="com.adib.mynote.Add_Fragment"
         android:label="fragment_add"
         tools:layout="@layout/fragment_add" />
+    <fragment
+        android:id="@+id/ViewCardNote_Fragment"
+        android:name="com.adib.mynote.ViewCardNote_Fragment"
+        android:label="fragment_view_card_note"
+        tools:layout="@layout/fragment_view_card_note" />
 </navigation>

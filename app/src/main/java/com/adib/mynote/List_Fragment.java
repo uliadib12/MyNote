@@ -65,10 +65,10 @@ public class List_Fragment extends Fragment {
         });
 
         //RecycleView Logic
-        addData();
+        addData(view);
     }
 
-    private void addData(){
+    private void addData(View view){
         noteArrayList = new ArrayList<>();
         database.noteDao().getAll().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -76,8 +76,10 @@ public class List_Fragment extends Fragment {
                     NoteAdapter.ListenerNoteViewHolder listenerNoteViewHolder = new NoteAdapter.ListenerNoteViewHolder() {
                         @Override
                         public void onClick(View v, int position) {
-                            Toast toast = Toast.makeText(getActivity(), "Title: " + data.get(position).getTitle(), Toast.LENGTH_SHORT);
-                            toast.show();
+                            Bundle bundle = new Bundle();
+                            bundle.putString("Title", data.get(position).title);
+                            bundle.putString("Text", data.get(position).text);
+                            Navigation.findNavController(view).navigate(R.id.action_list_Fragment_to_ViewCardNote_Fragment,bundle);
                         }
                     };
                     NoteAdapter.ListenerlongNoteViewHolder listenerlongNoteViewHolder = new NoteAdapter.ListenerlongNoteViewHolder() {
