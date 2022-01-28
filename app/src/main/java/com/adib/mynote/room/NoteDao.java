@@ -12,7 +12,7 @@ import io.reactivex.rxjava3.core.Single;
 
 @Dao
 public interface NoteDao {
-    @Query("SELECT * FROM Note")
+    @Query("SELECT * FROM Note ORDER BY id DESC")
     Single<List<Note>> getAll();
 
     @Query("UPDATE note SET title = :title, text = :text WHERE id = :id")
