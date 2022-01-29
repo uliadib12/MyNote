@@ -85,7 +85,13 @@ public class ViewCardNote_Fragment extends Fragment {
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editNote(view);
+                if(!titleNote.getText().toString().isEmpty() && !textNote.getText().toString().isEmpty()) {
+                    editNote(view);
+                }
+                else {
+                    Toast toast = Toast.makeText(getActivity(), "Error Please Insert Title and Text", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
             }
         });
 
