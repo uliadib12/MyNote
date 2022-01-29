@@ -41,17 +41,31 @@
         app:layout_constraintTop_toBottomOf="@+id/Top_Bar">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/Add_Button"
+            android:id="@+id/Edit_Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="80dp"
+            app:tint="@color/white"
+            android:backgroundTint="@color/purple_500"
+            android:contentDescription="Add"
+            app:srcCompat="@drawable/ic_baseline_check_24"
+            tools:ignore="VectorDrawableCompat" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/Delete_Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
             android:layout_marginBottom="20dp"
             android:layout_marginRight="10dp"
             app:tint="@color/white"
-            android:backgroundTint="@color/purple_500"
+            android:backgroundTint="#c93543"
             android:contentDescription="Add"
-            app:srcCompat="@drawable/ic_baseline_check_24"
+            app:srcCompat="@drawable/ic_baseline_close_24"
             tools:ignore="VectorDrawableCompat" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

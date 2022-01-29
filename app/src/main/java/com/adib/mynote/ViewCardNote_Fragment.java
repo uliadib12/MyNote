@@ -30,7 +30,7 @@ public class ViewCardNote_Fragment extends Fragment {
     private ViewCardNoteModel model;
     private EditText textNote;
     private EditText titleNote;
-    private FloatingActionButton addButton;
+    private FloatingActionButton editButton;
     private View backButton;
 
     public ViewCardNote_Fragment() {
@@ -55,7 +55,7 @@ public class ViewCardNote_Fragment extends Fragment {
         database = NoteDatabase.getInstance(getActivity());
         titleNote = getView().findViewById(R.id.Title_Note);
         textNote = getView().findViewById(R.id.Text_Note);
-        addButton = getView().findViewById(R.id.Add_Button);
+        editButton = getView().findViewById(R.id.Edit_Button);
         model = new ViewModelProvider(getActivity()).get(ViewCardNoteModel.class);
 
         //Set Observer
@@ -79,7 +79,7 @@ public class ViewCardNote_Fragment extends Fragment {
         model.getText().setValue(getArguments().getString("Text"));
 
         //Edit Button Logic
-        addButton.setOnClickListener(new View.OnClickListener() {
+        editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 editNote(view);
@@ -101,8 +101,8 @@ public class ViewCardNote_Fragment extends Fragment {
         database.noteDao().update(id,titleNote.getText().toString(),textNote.getText().toString()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(() -> {
-                    Toast toast = Toast.makeText(getActivity(), "Edit Note", Toast.LENGTH_SHORT);
-                    toast.show();
+//                    Toast toast = Toast.makeText(getActivity(), "Edit Note", Toast.LENGTH_SHORT);
+//                    toast.show();
                     Navigation.findNavController(view).popBackStack();
                 },throwable -> {
                     Toast toast = Toast.makeText(getActivity(), "Error " + throwable, Toast.LENGTH_SHORT);
