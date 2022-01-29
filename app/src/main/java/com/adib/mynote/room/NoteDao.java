@@ -21,6 +21,6 @@ public interface NoteDao {
     @Insert
     Completable insert(Note note);
 
-    @Delete
-    Completable delete(Note note);
+    @Query("DELETE FROM note WHERE id = :id")
+    Completable delete(int id);
 }
