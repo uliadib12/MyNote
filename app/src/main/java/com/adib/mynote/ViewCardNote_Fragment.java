@@ -1,5 +1,6 @@
 package com.adib.mynote;
 
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -60,6 +61,18 @@ public class ViewCardNote_Fragment extends Fragment {
         editButton = getView().findViewById(R.id.Edit_Button);
         deleteButton = getView().findViewById(R.id.Delete_Button);
         model = new ViewModelProvider(getActivity()).get(ViewCardNoteModel.class);
+
+        //Animation
+        editButton.bringToFront();
+        ObjectAnimator animTransX = ObjectAnimator.ofFloat(editButton, "translationX", -130f);
+        animTransX.setDuration(700);
+        ObjectAnimator animFade = ObjectAnimator.ofFloat(editButton, "alpha", 0f,1f);
+        animFade.setDuration(700);
+        ObjectAnimator animaFadeDelete = ObjectAnimator.ofFloat(deleteButton, "alpha", 0f,1f);
+        animaFadeDelete.setDuration(700);
+        animaFadeDelete.start();
+        animFade.start();
+        animTransX.start();
 
         //Set Observer
         final Observer<String> TitleObserver = new Observer<String>() {
